@@ -1,10 +1,10 @@
 package otypes;
 public class  Player{
-	public static enum Stone{
+	static enum Stone{
 		BLACK(1)
 		,WHITE(2);
-		public final Integer value;
-		private Stone(Integer value) {
+		public final int value;
+		private Stone(int value) {
 			this.value = value;
 		}
 	}
@@ -13,10 +13,10 @@ public class  Player{
     	Player.stone = stone;
     }
     
-    public static Stone stone;
+    static Stone stone;
     static Player player = new Player(stone);
     
-    public static Integer other(Integer value) {
+    public static int other(int value) {
     	if(Player.stone.value == 1) {return Player.Stone.WHITE.value;}
     	else {return Player.Stone.BLACK.value;}
           

@@ -1,26 +1,17 @@
 package oboard;
-
-import java.util.ArrayList;
+import java.util.Set;
 
 import otypes.Player;
-import otypes.Point;
+
 
 public class Ostring {
-	Integer color;
-	ArrayList<Point> stones = new ArrayList<Point>();
-
-
-      Ostring(Integer color ,ArrayList<Point> stones){
+	int color;
+	Set stones;
+	Set liberties;
+	
+     private Ostring(int color, Set stones, Set liberties){
     	 this.color = color;
-    	 this.stones = stones; 
+    	 this.stones = stones;
+    	 this.liberties = liberties;
      }
-     
-      Ostring merged_with(Ostring ostring) {
-    	 assert ostring.color == this.color;
-    	 this.stones.addAll(ostring.stones);
-    	 Ostring Ostring = new Ostring(color,stones); 	
-    	 return Ostring;
-     }
-     
 }
-     
