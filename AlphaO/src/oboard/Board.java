@@ -32,9 +32,9 @@ public class Board {
 		  Ostring new_string_URLL = new Ostring(Player.stone.value,adjacent_same_color );
 		
 		}
-		///////
+		////////
 		
-		///////
+		////////
 		
 		
 		
