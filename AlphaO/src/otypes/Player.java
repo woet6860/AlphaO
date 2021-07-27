@@ -1,4 +1,6 @@
 package otypes;
+
+
 public class  Player{
 	public static enum Stone{
 		BLACK(1)
