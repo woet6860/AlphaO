@@ -55,10 +55,10 @@ public class Board {
 		}
 			
 		
-			
+	
 
 		
-		////////
+		////////////
 		
 		////////
 		
@@ -74,7 +74,9 @@ public class Board {
 		
 	}
 	
-	
+    public Ostring get_ostring(Point point) {
+    	Ostring string = this._grid.
+    }
 	
 	
 	
