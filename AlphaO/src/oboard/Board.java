@@ -9,7 +9,7 @@ import java.util.Map;
 public class Board {
 	int num_raws;
 	int num_cols;
-    public Map<Point, Integer>_grid = new HashMap<>();	
+    public Map<Point, Player>_grid = new HashMap<>();	
 	private Board() {
 		this.num_raws = num_raws;
 		this.num_cols = num_cols;
@@ -22,13 +22,13 @@ public class Board {
 		assert this._grid.get(point) == null;
 		
 		
-        HashSet<Point> adjacent_same_color_ULRL = new HashSet<>();
+        //HashSet<Point> adjacent_same_color_ULRL = new HashSet<>();
     	HashSet<Point> adjacent_same_color_URLL = new HashSet<>();
     
-    	adjacent_same_color_ULRL.add(point);
+    	//adjacent_same_color_ULRL.add(point);
     	HashSet<Point> liberties_URLL = new HashSet<>(); 
     	
-    	Ostring ostring_ULRL;// '\'
+    	///Ostring ostring_ULRL;// '\'
 		//URLL
 		for(Point neighbor:point.neighbor_URLL) {
 			
@@ -36,22 +36,25 @@ public class Board {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-            Integer neighbor_URLL_Point = this._grid.get(neighbor);
+			Ostring neighbor_string = new Ostring(Player, );
 			
-			if(neighbor_URLL_Point == null) {
+            neighbor_string.color = this._grid.get(neighbor);
+			
+			if(neighbor_string.color == null) {
 				liberties_URLL.add(neighbor);
 			}
-			else if(neighbor_URLL_Point == Player.stone.value) {
-				
-             adjacent_same_color_URLL.add(neighbor);
-             
-                 
+			else if(neighbor_string.color == player) {
+				if(adjacent_same_color_URLL.contains(neighbor_string) == false) {			
+             adjacent_same_color_URLL.addAll(neighbor_string.stones);}                
 			}
 		}
+		
 		HashSet<Point> URLL_Point = new HashSet<>();
-		Ostring ostring_URLL = new Ostring(Player.stone.value,URLL_Point ,liberties_URLL);
-		for(Point x: adjacent_same_color_URLL) {
-			
+		Ostring ostring_URLL = new Ostring(player,URLL_Point ,liberties_URLL);
+		Ostring same_color_string;
+		
+		while(adjacent_same_color_URLL.contains(same_color_string.stones)){
+			ostring_URLL = ostring_URLL.merged_with(same_color_string);
 		}
 			
 		
@@ -65,8 +68,8 @@ public class Board {
 	
 		
 	}
-	public Integer get_value(Point point) {
-		Integer string = this._grid.get(point) ;
+	public Player get(Point point) {
+        Player string = this._grid.get(point) ;
 		if(string == null) {
 			return null;
 		}
@@ -75,7 +78,7 @@ public class Board {
 	}
 	
     public Ostring get_ostring(Point point) {
-    	Ostring string = this._grid.
+    	Ostring string = this._grid
     }
 	
 	

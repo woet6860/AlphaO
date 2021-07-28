@@ -1,16 +1,17 @@
 package oboard;
 
 import java.util.HashSet;
+import otypes.Player;
 
 import otypes.Point;
 
 public class Ostring {
-	public Integer color;
+	public Player color;
 	public HashSet<Point> stones = new HashSet<Point>();
 	public HashSet<Point> liberties = new HashSet<Point>();
 
 
-       Ostring(Integer color ,HashSet<Point> stones,HashSet<Point> liberties){
+       Ostring(Player color ,HashSet<Point> stones,HashSet<Point> liberties){
     	 this.color = color;
     	 this.stones = stones; 
     	 this.liberties = liberties;
