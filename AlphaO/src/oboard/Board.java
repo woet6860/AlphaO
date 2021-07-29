@@ -1,23 +1,14 @@
 package oboard;
 import otypes.Point;
 import otypes.Player;
-import oboard.Ostring;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 public class Board {
 	int num_rows;
 	int num_cols;
-
     public Map<Point, Ostring[]>_grid = new HashMap<>();	
-	private Board() {
-		this.num_rows = num_rows;
-		this.num_cols = num_cols;
-		this._grid = _grid;
-		
-	}
 	
 	public void place_stone(Player player, Point point) {
 		assert this.is_on_grid(point);
