@@ -5,10 +5,16 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board {
+public class Board implements Cloneable {
 	int num_rows;
 	int num_cols;
-    public Map<Point, Ostring[]>_grid = new HashMap<>();	
+    public Map<Point, Ostring[]>_grid = new HashMap<>();
+    
+    protected Board clone() throws CloneNotSupportedException{
+    	
+    	
+    	return (Board) super.clone();
+    } 
 	
 	public void place_stone(Player player, Point point) {
 		assert this.is_on_grid(point);
@@ -177,7 +183,7 @@ public class Board {
 	
 		
 	}
-	public Player get_Player(Point point) {
+	private Player get_Player(Point point) {
         Ostring string = this._grid.get(point)[1] ;
 		if(string == null) {
 			return null;
@@ -188,7 +194,7 @@ public class Board {
 	
 
 	
-   public boolean is_on_grid(Point point) {
+   private boolean is_on_grid(Point point) {
 	  return 1 <= point.row && point.row<= this.num_rows && 1 <= point.col && point.col<= this.num_cols;
    }
 }
