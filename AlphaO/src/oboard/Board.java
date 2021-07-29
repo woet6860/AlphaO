@@ -21,7 +21,7 @@ public class Board {
 	
 	public void place_stone(Player player, Point point) {
 		assert this.is_on_grid(point);
-		assert this._grid.get(point) == null;
+		assert this.get_Player(point) == null;
 		
 		HashSet<Ostring> adjacent_same_color_URLL = new HashSet<>();
 		HashSet<Ostring> adjacent_same_color_ULRL = new HashSet<>();
@@ -33,6 +33,11 @@ public class Board {
     	HashSet<Point> liberties_ULRL = new HashSet<>(); 
     	HashSet<Point> liberties_HORIZON = new HashSet<>(); 
     	HashSet<Point> liberties_VERTICAL = new HashSet<>(); 
+    	
+    	HashSet<Ostring> adjacent_opposite_color_URLL = new HashSet<>();
+    	HashSet<Ostring> adjacent_opposite_color_ULRL = new HashSet<>();
+    	HashSet<Ostring> adjacent_opposite_color_HORIZON = new HashSet<>();
+    	HashSet<Ostring> adjacent_opposite_color_VERTICAL = new HashSet<>();
 
 		//URLL
 		for(Point neighbor:point.neighbor_URLL) {
@@ -47,9 +52,11 @@ public class Board {
 			if(adjacent_same_color_URLL.contains(neighbor_string) == false) {
              adjacent_same_color_URLL.add(neighbor_string);}                
 			}
-	     	else {
+	     	else {if(adjacent_opposite_color_URLL.contains(neighbor_string) == false) {
+	     		adjacent_opposite_color_URLL.add(neighbor_string);
+	        	}
 		    	
-		   }
+		    }
 		}
 		HashSet<Point> new_stones_URLL = new HashSet<>();
 		new_stones_URLL.add(point);
@@ -57,6 +64,10 @@ public class Board {
 		for(Ostring same_color_string : adjacent_same_color_URLL) {
         	new_string_URLL = new_string_URLL.merged_with(same_color_string);
         }
+		for(Ostring opposite_string:adjacent_opposite_color_URLL) {
+			opposite_string.remove_liberty(point);
+		}
+		
 		//URLL-END
 		
 		//ULRL
@@ -72,9 +83,20 @@ public class Board {
 			if(adjacent_same_color_ULRL.contains(neighbor_string) == false) {
              adjacent_same_color_ULRL.add(neighbor_string);}                
 			}
-	     	else {
+	     	else {if(adjacent_opposite_color_ULRL.contains(neighbor_string) == false) {
+	     		adjacent_opposite_color_ULRL.add(neighbor_string);
 		    	
-		   }
+		        }
+		    }
+		}
+		HashSet<Point> new_stones_ULRL = new HashSet<>();
+		new_stones_ULRL.add(point);
+        Ostring new_string_ULRL = new Ostring(player,new_stones_ULRL, liberties_ULRL);	
+		for(Ostring same_color_string : adjacent_same_color_ULRL) {
+        	new_string_ULRL = new_string_ULRL.merged_with(same_color_string);
+        }
+		for(Ostring opposite_string : adjacent_opposite_color_ULRL) {
+			opposite_string.remove_liberty(point);
 		}
 		//ULRL-END
 		
@@ -91,9 +113,20 @@ public class Board {
 			if(adjacent_same_color_HORIZON.contains(neighbor_string) == false) {
              adjacent_same_color_HORIZON.add(neighbor_string);}                
 			}
-	     	else {
+	     	else {if(adjacent_opposite_color_HORIZON.contains(neighbor_string) == false) {
+	     		adjacent_opposite_color_HORIZON.add(neighbor_string);
 		    	
-		   }
+		        }
+	    	}
+		}
+		HashSet<Point> new_stones_HORIZON = new HashSet<>();
+		new_stones_HORIZON.add(point);
+        Ostring new_string_HORIZON = new Ostring(player,new_stones_HORIZON, liberties_HORIZON);	
+		for(Ostring same_color_string : adjacent_same_color_HORIZON) {
+        	new_string_HORIZON = new_string_HORIZON.merged_with(same_color_string);
+        }
+		for(Ostring opposite_string : adjacent_opposite_color_HORIZON) {
+			opposite_string.remove_liberty(point);
 		}
 		//HORIZON-END
 		
@@ -110,20 +143,39 @@ public class Board {
 			if(adjacent_same_color_VERTICAL.contains(neighbor_string) == false) {
              adjacent_same_color_VERTICAL.add(neighbor_string);}                
 			}
-	     	else {
+	     	else {if(adjacent_opposite_color_VERTICAL.contains(neighbor_string) == false) {
+	     		adjacent_opposite_color_VERTICAL.add(neighbor_string);
 		    	
-		   }
+		        }
+	    	}
 		}
-		
+		HashSet<Point> new_stones_VERTICAL = new HashSet<>();
+		new_stones_URLL.add(point);
+        Ostring new_string_VERTICAL = new Ostring(player,new_stones_VERTICAL, liberties_VERTICAL);	
+		for(Ostring same_color_string : adjacent_same_color_VERTICAL) {
+        	new_string_VERTICAL = new_string_VERTICAL.merged_with(same_color_string);
+        }
+		for(Ostring opposite_string : adjacent_opposite_color_VERTICAL) {
+			opposite_string.remove_liberty(point);
+		}
 		//VERTIVAL-END
 		
 		
 		
        
-	    Ostring[] new_value = {new_string_URLL,};///나머지 추가	
+	    Ostring[] new_value = {new_string_URLL,new_string_ULRL, new_string_HORIZON, new_string_VERTICAL};///나머지 추가	
         for(Point new_string_URLL_point:new_string_URLL.stones) {
              this._grid.put(new_string_URLL_point,new_value);
         }
+        for(Point new_string_ULRL_point:new_string_ULRL.stones) {
+            this._grid.put(new_string_ULRL_point,new_value);
+       }
+        for(Point new_string_HORIZON_point:new_string_HORIZON.stones) {
+            this._grid.put(new_string_HORIZON_point,new_value);
+       }
+        for(Point new_string_VERTICAL_point:new_string_VERTICAL.stones) {
+            this._grid.put(new_string_VERTICAL_point,new_value);
+       }
 		
 	
 
@@ -134,7 +186,7 @@ public class Board {
 	
 		
 	}
-	public Player get_URLL(Point point) {
+	public Player get_Player(Point point) {
         Ostring string = this._grid.get(point)[1] ;
 		if(string == null) {
 			return null;
