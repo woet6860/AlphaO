@@ -10,9 +10,13 @@ public class Board implements Cloneable {
 	int num_cols;
     public Map<Point, Ostring[]>_grid = new HashMap<>();
     
+    public Board(int num_rows, int num_cols) {
+    	this.num_rows = num_rows;
+    	this.num_cols = num_cols;
+    }
+    
+    @Override
     protected Board clone() throws CloneNotSupportedException{
-    	
-    	
     	return (Board) super.clone();
     } 
 	
@@ -41,7 +45,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[1];		
+			Ostring neighbor_string = this._grid.get(neighbor)[0];		
 			if(neighbor_string.color == null) {
 				liberties_URLL.add(neighbor);
 			}
@@ -72,7 +76,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[2];		
+			Ostring neighbor_string = this._grid.get(neighbor)[1];		
 			if(neighbor_string.color == null) {
 				liberties_ULRL.add(neighbor);
 			}
@@ -102,7 +106,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[3];		
+			Ostring neighbor_string = this._grid.get(neighbor)[2];		
 			if(neighbor_string.color == null) {
 				liberties_HORIZON.add(neighbor);
 			}
@@ -132,7 +136,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[4];		
+			Ostring neighbor_string = this._grid.get(neighbor)[3];		
 			if(neighbor_string.color == null) {
 				liberties_VERTICAL.add(neighbor);
 			}
@@ -194,7 +198,7 @@ public class Board implements Cloneable {
 	
 
 	
-   private boolean is_on_grid(Point point) {
+   public boolean is_on_grid(Point point) {
 	  return 1 <= point.row && point.row<= this.num_rows && 1 <= point.col && point.col<= this.num_cols;
    }
 }

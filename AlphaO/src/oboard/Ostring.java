@@ -34,7 +34,7 @@ public class Ostring {
     	  this.liberties.add(point);
       }
       
-      public int len_stones(){
+      public int len_string(){
     	  return this.stones.size();
       }
      
