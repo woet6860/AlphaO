@@ -20,6 +20,7 @@ public class GameState{
     	  this.simulate_boards =  simulate_boards;
     	  this.last_move = move;
       }	
+
       
       public GameState apply_move(Move move) throws CloneNotSupportedException{
     	  Board next_board = null;
@@ -93,7 +94,8 @@ public class GameState{
     			GameState.board.place_stone(next_player, point);
     				for(Ostring ostring2 : GameState.board._grid.get(point)) {
     					if(five_string(ostring2)) {
-    							count4x4 += 1;}
+    							count4x4 += 1;
+    							break;}
     				}
     			}
     		}
@@ -123,6 +125,7 @@ public class GameState{
       								}
       								if(x==2) {
       									count += 1;
+      									
       								}
       							}
       						}
@@ -143,7 +146,7 @@ public class GameState{
     		 for(Ostring ostring:GameState.board._grid.get(GameState.last_move.point)) {
     			 if(ostring.len_string()>5) {
     				 count += 1;
-    				 continue;
+    				 break;
     			 }
     			 if(count==1) {if(this.illegal_points.contains(GameState.last_move.point)) {
     				 illegal_points.add(GameState.last_move.point);
@@ -154,8 +157,27 @@ public class GameState{
       }
       
       public Player is_win() {
+    	  Player winner = null;
+    	 if(this.last_move.is_play) {
+    		  for(Ostring ostring:this.board._grid.get(this.last_move.point)) {
+    			  if(ostring.len_string() >= 5 ) {
+    				  winner = this.next_player.other();
+    			  }
+    			 
+    			  
+    		  }
+    	  }
+    	  else if (this.last_move.is_resign){
+    		  winner =  this.next_player.other();
+    	  }
     	  
+    	 return winner;
       }
-      
-      
+
 }
+
+      
+  
+      
+      
+
