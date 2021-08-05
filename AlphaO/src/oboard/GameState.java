@@ -13,7 +13,7 @@ public class GameState{
 	 Ostring ostring;
 	 Player next_player;
 	 HashSet<GameState> simulate_boards ;
-
+     HashSet<Point> illegal_points;
      private GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
     	  this.board = board;
     	  this.next_player = next_player;
@@ -85,56 +85,44 @@ public class GameState{
     	
       }
       
-      public boolean check_4x4_string() {
+      public void check_4x4_string() {
     	int count4x4 = 0;
-    	int count3x3 = 0;
     	for(GameState GameState : this.simulate_boards) {
     		for(Ostring ostring: GameState.board._grid.get(GameState.last_move.point)) {
     			for(Point point:ostring.liberties) {
-    				int x = 0;
     			GameState.board.place_stone(next_player, point);
     				for(Ostring ostring2 : GameState.board._grid.get(point)) {
     					if(five_string(ostring2)) {
-    							x += 1;}
+    							count4x4 += 1;}
     				}
-    				if(x==1) { count4x4 += x; continue;}
     			}
     		}
+    		if((count4x4 >= 2)) {if(this.illegal_points.contains(GameState.last_move.point) == false) {
+				this.illegal_points.add(GameState.last_move.point);}
+    		}	
     	}
-    	
-    	if((count4x4 >= 2) || (count3x3 >=2)) {
-    		return true;
-    	}
-    	else {return false;}
       }
          
      
+
       
-      
-      public boolean open_4_string(Ostring ostring) {
-    	  if((ostring.len_string()) == 4 && (ostring.liberties.size() == 2) 
-    		  ) {
-    		  return true;
-    	  }
-    	  else {
-    		  return false;
-    	  }
-    	  
-      }
-      
-      public boolean check_3x3_string(){
+      public void check_3x3_string(){
     	  int count = 0;
       	for(GameState GameState : this.simulate_boards) {
       		for(Ostring ostring: GameState.board._grid.get(GameState.last_move.point)) {
       			for(Point point:ostring.liberties) {
       			GameState.board.place_stone(Player.BLACK, point);
       				for(Ostring ostring2 : GameState.board._grid.get(point)) {
+      					int x = 0;
       					if((ostring2.len_string() == 4) && (ostring2.liberties.size() == 2)) {
       						for(Point point2 : ostring2.liberties) {
       							GameState.board.place_stone(Player.BLACK, point2);
       							for(Ostring ostring3 : board._grid.get(point2)) {
       								if(five_string(ostring3)) {
-      									
+      							        x += 1;
+      								}
+      								if(x==2) {
+      									count += 1;
       								}
       							}
       						}
@@ -142,17 +130,27 @@ public class GameState{
       				}
       			}
       		}
+      		if(count >= 2)  {if(this.illegal_points.contains(GameState.last_move.point) == false){
+      			this.illegal_points.add(GameState.last_move.point);
+      		}
       	}
-      	
-      	if(count >= 2) {
-      		return true;
-      	}
-      	else {return false;}
-    	  
+      }
       }
       
-      public boolean check_too_long_string(){
-    	  
+      public void check_too_long_string(){
+    	  int count = 0;
+    	 for(GameState GameState : this.simulate_boards) {
+    		 for(Ostring ostring:GameState.board._grid.get(GameState.last_move.point)) {
+    			 if(ostring.len_string()>5) {
+    				 count += 1;
+    				 continue;
+    			 }
+    			 if(count==1) {if(this.illegal_points.contains(GameState.last_move.point)) {
+    				 illegal_points.add(GameState.last_move.point);
+    			 }
+    		 }
+    	 }
+      }
       }
       
       public Player is_win() {
