@@ -2,12 +2,12 @@ package oboard;
 import otypes.Point;
 
 public class Move {
-    Point point;
-	boolean is_play;
-	boolean is_pass;
-	boolean is_resign;	
+    public Point point;
+	public boolean is_play;
+	public boolean is_pass;
+	public boolean is_resign;	
 	
-	private Move(){
+	public	 Move(){
 		
 		assert (point != null ) ^ is_pass ^ is_resign;
 		this.point = null;

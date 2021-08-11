@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Board implements Cloneable {
-	int num_rows;
+	public int num_rows;
 	int num_cols;
-    public Map<Point, Ostring[]>_grid = new HashMap<>();
+    public static Map<Point, Ostring[]>_grid = new HashMap<>();
     
     public Board(int num_rows, int num_cols) {
     	this.num_rows = num_rows;
@@ -22,7 +22,7 @@ public class Board implements Cloneable {
 	
 	public void place_stone(Player player, Point point) {
 		assert this.is_on_grid(point);
-		assert this.get_Player(point) == null;
+		assert get_Player(point) == null;
 		
 		HashSet<Ostring> adjacent_same_color_URLL = new HashSet<>();
 		HashSet<Ostring> adjacent_same_color_ULRL = new HashSet<>();
@@ -45,7 +45,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[0];		
+			Ostring neighbor_string = _grid.get(neighbor)[0];		
 			if(neighbor_string.color == null) {
 				liberties_URLL.add(neighbor);
 			}
@@ -76,7 +76,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[1];		
+			Ostring neighbor_string = _grid.get(neighbor)[1];		
 			if(neighbor_string.color == null) {
 				liberties_ULRL.add(neighbor);
 			}
@@ -106,7 +106,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[2];		
+			Ostring neighbor_string = _grid.get(neighbor)[2];		
 			if(neighbor_string.color == null) {
 				liberties_HORIZON.add(neighbor);
 			}
@@ -136,7 +136,7 @@ public class Board implements Cloneable {
 			if(this.is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[3];		
+			Ostring neighbor_string = _grid.get(neighbor)[3];		
 			if(neighbor_string.color == null) {
 				liberties_VERTICAL.add(neighbor);
 			}
@@ -166,16 +166,16 @@ public class Board implements Cloneable {
        
 	    Ostring[] new_value = {new_string_URLL,new_string_ULRL, new_string_HORIZON, new_string_VERTICAL};///나머지 추가	
         for(Point new_string_URLL_point:new_string_URLL.stones) {
-             this._grid.put(new_string_URLL_point,new_value);
+             _grid.put(new_string_URLL_point,new_value);
         }
         for(Point new_string_ULRL_point:new_string_ULRL.stones) {
-            this._grid.put(new_string_ULRL_point,new_value);
+            _grid.put(new_string_ULRL_point,new_value);
        }
         for(Point new_string_HORIZON_point:new_string_HORIZON.stones) {
-            this._grid.put(new_string_HORIZON_point,new_value);
+            _grid.put(new_string_HORIZON_point,new_value);
        }
         for(Point new_string_VERTICAL_point:new_string_VERTICAL.stones) {
-            this._grid.put(new_string_VERTICAL_point,new_value);
+            _grid.put(new_string_VERTICAL_point,new_value);
        }
 		
 	
@@ -187,8 +187,8 @@ public class Board implements Cloneable {
 	
 		
 	}
-	private Player get_Player(Point point) {
-        Ostring string = this._grid.get(point)[1] ;
+	public static Player get_Player(Point point) {
+        Ostring string =_grid.get(point)[1] ;
 		if(string == null) {
 			return null;
 		}
