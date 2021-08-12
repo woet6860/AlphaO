@@ -6,13 +6,13 @@ import java.util.HashSet;
 
 
 public class GameState{
-	 Board board;
-	 Move last_move;
+	 public Board board;
+	 public Move last_move;
 	 Ostring ostring;
-	 Player next_player;
+	 public Player next_player;
 	 HashSet<GameState> simulate_boards ;
      public static HashSet<Point> illegal_points;
-     private GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
+     public GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
     	  this.board = board;
     	  this.next_player = next_player;
     	  this.simulate_boards =  simulate_boards;
@@ -160,6 +160,10 @@ public class GameState{
       
       
       public boolean is_over() {
+    	  if(this.last_move == null) {
+    		  return false;
+    	  }
+    	  
     	  if(this.last_move.is_play) {
     		  for(Ostring ostring:Board._grid.get(this.last_move.point)) {
     			  if(this.five_string(ostring)) {
