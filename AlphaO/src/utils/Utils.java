@@ -58,13 +58,18 @@ public class Utils {
 		   List<String> Line = new ArrayList<>();
 		   for(int col = 0; col <= board.num_rows;col+=1) {
 			   Point stone = new Point(row,col);////stone_to_char (MAP)의 키를 이용해야한다 .....
-		   }
-		   
+			   Line.add(STONE_TO_CHAR.get(stone));
+			}
+		   System.out.printf("%s%d %s" ,bump,row,String.join(" ",Line));   
 	   }
+	   
+	   System.out.printf("   " + "  " + String.join(" ",COLS.subList(0,board.num_rows)));
    }
    
-   
-    	
-    
-
+   public Point point_from_coords(String coord) {
+	   int col = COLS.indexOf(coord.substring(0)) + 1;
+	   int row = Integer.parseInt(coord.substring(1));
+	   Point point = new Point(row ,col);
+	   return point;
+   }
 }
