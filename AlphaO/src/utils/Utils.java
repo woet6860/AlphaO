@@ -10,8 +10,10 @@ import oboard.Board;
 import oboard.Move;
 
 public class Utils {
+	public static String COLS = "ABCDEFGHJKLMNOPQRST";
+	//public static String[] COLS = {"A","B","C","D","E","F","G","H","J","K","L","M","N","O","P","Q","R","S","T"};
     static String COLS_str = "A,B,C,D,E,F,G,H,J,K,L,M,N,O,P,Q,R,S,T";
-    public static List<String> COLS = Arrays.asList(COLS_str.split(","));
+   // public static List<String> COLS = Arrays.asList(COLS_str.split(","));
     static HashMap<Point, String> STONE_TO_CHAR = new HashMap<>();
     public static void stone_to_char(Point point){
     	if(GameState.illegal_points != null) {
@@ -42,7 +44,7 @@ public class Utils {
 		   move_str = "resigns";
 	   }
 	   else if(move.point.col>0){
-		   move_str = String.format("%s%d" , COLS.get((move.point.col)-1) , move.point.row);
+		   move_str = String.format("%s%d" , COLS.substring(((move.point.col)-1),move.point.col) , move.point.row);
 	   }
 	   
 	   System.out.println(String.format("%s %s", move_str, player));
@@ -68,12 +70,12 @@ public class Utils {
 		   System.out.println(bump + row +" " + String.join(" ",Line));  
 	   }
 	   
-	   System.out.printf("   " + String.join(" ",COLS.subList(0,board.num_rows)));
+	   System.out.printf("   " + String.join(" ",COLS.substring(0,board.num_rows)));
 	   System.out.println();
    }
    
    public static Point point_from_coords(String coord) {
-	   int col = (COLS.indexOf(coord.substring(0))) + 1;
+	   int col = (COLS.indexOf(coord.substring(0,1))) + 1;
 	   int row = Integer.parseInt(coord.substring(1));
 	   Point point = new Point(row,col) ;
 	   

@@ -24,6 +24,7 @@ public class PlayGame {
     			  String Player_move = scan.next();
     			  Point point = point_from_coords(Player_move);
     			  System.out.println(point.col);
+    			  System.out.println(point.row);
     			  System.out.println(Utils.COLS.getClass().getName());
     			  Move move = Move.play(point);
     			  if(GameState.illegal_points != null) {while(GameState.illegal_points.contains(point)) { 
