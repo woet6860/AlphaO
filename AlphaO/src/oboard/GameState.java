@@ -10,7 +10,7 @@ public class GameState{
 	 public Move last_move;
 	 Ostring ostring;
 	 public Player next_player;
-	 HashSet<GameState> simulate_boards ;
+	 public HashSet<GameState> simulate_boards ;
      public static HashSet<Point> illegal_points;
      public GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
     	  this.board = board;
