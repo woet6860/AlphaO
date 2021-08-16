@@ -7,10 +7,10 @@ import java.util.Map;
 
 public class Board implements Cloneable {
 	public int num_rows;
-	int num_cols;
-    public static Map<Point, Ostring[]>_grid = new HashMap<>();
+	public int num_cols;
+    public Map<Point, Ostring[]>_grid = new HashMap<>();
     
-    public Board(int num_rows, int num_cols) {
+    Board(int num_rows, int num_cols) {
     	this.num_rows = num_rows;
     	this.num_cols = num_cols;
     }
@@ -21,8 +21,13 @@ public class Board implements Cloneable {
     } 
 	
 	public void place_stone(Player player, Point point) {
-		assert this.is_on_grid(point);
+		assert is_on_grid(point);
 		assert get_Player(point) == null;
+		
+		point.neighbor_HORIZON_point();
+		point.neighbor_ULRL_point();
+		point.neighbor_VERTICAL_point();
+		point.neighbor_URLL_point();
 		
 		HashSet<Ostring> adjacent_same_color_URLL = new HashSet<>();
 		HashSet<Ostring> adjacent_same_color_ULRL = new HashSet<>();
@@ -42,10 +47,10 @@ public class Board implements Cloneable {
 
 		//URLL
 		for(Point neighbor:point.neighbor_URLL) {
-			if(this.is_on_grid(neighbor) == false) {
+			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = _grid.get(neighbor)[0];		
+			Ostring neighbor_string = this._grid.get(neighbor)[0];		
 			if(neighbor_string.color == null) {
 				liberties_URLL.add(neighbor);
 			}
@@ -73,7 +78,7 @@ public class Board implements Cloneable {
 		
 		//ULRL
 		for(Point neighbor:point.neighbor_ULRL){
-			if(this.is_on_grid(neighbor) == false) {
+			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
 			Ostring neighbor_string = _grid.get(neighbor)[1];		
@@ -103,7 +108,7 @@ public class Board implements Cloneable {
 		
 		//HORIZON
 		for(Point neighbor:point.neighbor_HORIZON) {
-			if(this.is_on_grid(neighbor) == false) {
+			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
 			Ostring neighbor_string = _grid.get(neighbor)[2];		
@@ -133,7 +138,7 @@ public class Board implements Cloneable {
 		
 		//VERTICAL
 		for(Point neighbor:point.neighbor_VERTICAL) {
-			if(this.is_on_grid(neighbor) == false) {
+			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
 			Ostring neighbor_string = _grid.get(neighbor)[3];		
@@ -187,7 +192,7 @@ public class Board implements Cloneable {
 	
 		
 	}
-	public static Player get_Player(Point point) {
+	public Player get_Player(Point point) {
         Ostring string =_grid.get(point)[1] ;
 		if(string == null) {
 			return null;

@@ -3,10 +3,8 @@ import otypes.Player;
 import otypes.Point;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Arrays;
 import java.util.ArrayList;
 import oboard.GameState;
-import oboard.Board;
 import oboard.Move;
 
 public class Utils {
@@ -15,18 +13,19 @@ public class Utils {
     static String COLS_str = "A,B,C,D,E,F,G,H,J,K,L,M,N,O,P,Q,R,S,T";
    // public static List<String> COLS = Arrays.asList(COLS_str.split(","));
     static HashMap<Point, String> STONE_TO_CHAR = new HashMap<>();
-    public static void stone_to_char(Point point){
-    	if(GameState.illegal_points != null) {
-            if(GameState.illegal_points.contains(point)) {
+    
+    public static void stone_to_char(GameState gamestate,Point point){
+    	if(gamestate.illegal_points != null) {
+            if(gamestate.illegal_points.contains(point)) {
     	STONE_TO_CHAR.put(point, "X");
     	}}
-    	  else if(Board._grid.get(point) == null){
+    	  else if(gamestate.board._grid.get(point) == null){
           	STONE_TO_CHAR.put(point, ".");
           }
-        else if(Board.get_Player(point) == Player.BLACK) {
+        else if(gamestate.board.get_Player(point) == Player.BLACK) {
         	STONE_TO_CHAR.put(point, "●");
         }
-        else if(Board.get_Player(point) ==Player.WHITE) {
+        else if(gamestate.board.get_Player(point) ==Player.WHITE) {
         	STONE_TO_CHAR.put(point, "○");
         }
       
@@ -51,8 +50,8 @@ public class Utils {
 	   System.out.println();
    }
    
-   public static void print_board(Board board) {
-	   for(int row = board.num_rows; row>=1; row-- ) {
+   public static void print_board(GameState gamestate) {
+	   for(int row = gamestate.board.num_rows; row>=1; row-- ) {
 		   String bump;
 		   if(row>9) {
 			   bump = "";
@@ -62,15 +61,15 @@ public class Utils {
 		   }
 		   List<String> Line = new ArrayList<>();
 		  
-		   for(int col = 1; col <=board.num_rows;col++) {
+		   for(int col = 1; col <=gamestate.board.num_rows;col++) {
 			   Point stone = new Point(row,col);////stone_to_char (MAP)의 키를 이용해야한다 .....
-			   stone_to_char(stone);			   
+			   stone_to_char(gamestate,stone);			   
 			   Line.add(STONE_TO_CHAR.get(stone));
 			}
 		   System.out.println(bump + row +" " + String.join(" ",Line));  
 	   }
 	   
-	   System.out.printf("   " + String.join(" ",COLS.substring(0,board.num_rows)));
+	   System.out.printf("   " + String.join(" ",COLS.substring(0,gamestate.board.num_rows)));
 	   System.out.println();
    }
    

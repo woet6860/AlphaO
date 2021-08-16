@@ -18,21 +18,20 @@ public class Move {
 	}
 
 	public static Move play(Point points){
-		Move move = new Move(null,false,false);
-		move.point = points;
-		move.is_pass = false;
-		move.is_resign = false;
+		Move move = new Move(points, false, false);
 		return move;
           
 
 	}
 	
-	public void pass_turn(){
-		this.is_pass = true;
+	public Move pass_turn(){
+		Move move = new Move(null, true ,false);
+		return move;
 	}
 	
-	public void resign() {
-		this.is_resign = true;
+	public Move resign() {
+		Move move = new Move(null, false, true);
+        return move;
 	}
 	 
 
