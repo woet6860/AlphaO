@@ -17,7 +17,7 @@ public class Move {
 	
 	}
 
-	public static Move play(Point points){
+	public Move play(Point points){
 		Move move = new Move(points, false, false);
 		return move;
           

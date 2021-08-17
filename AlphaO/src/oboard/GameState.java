@@ -34,7 +34,7 @@ public class GameState{
     		  e.printStackTrace();
     	  }
     	  if(move.is_play) {
-    		 next_board.place_stone(next_player, move.point); 
+    		 next_board.place_stone(this.next_player, move.point); 
          }
     	  else { 
     	     next_board = this.board;
@@ -57,7 +57,7 @@ public class GameState{
     	  }
     	 
     	  simulation_board.place_stone(Player.BLACK, point);
-    	  GameState simulate_GameState = new GameState(simulation_board, Player.BLACK, null, Move.play(point));
+    	  GameState simulate_GameState = new GameState(simulation_board, Player.BLACK, null, gamestate.last_move);
     	  gamestate.simulate_boards.add(simulate_GameState);
     	  check_3x3_string(gamestate);
     	  check_4x4_string(gamestate);
@@ -76,7 +76,7 @@ public class GameState{
     	
     	for(Point point:empty_points) {
     		simulation(gamestate,point);
-    	}
+    	}	
     	
       }
       

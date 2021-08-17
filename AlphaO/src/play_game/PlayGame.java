@@ -22,20 +22,24 @@ public class PlayGame {
     			  Point point = point_from_coords(Player_move);
     			  System.out.println(point.col);
     			  System.out.println(point.row);
-    			  Move move = Move.play(point);
-    			  if(game.illegal_points != null) {while(game.illegal_points.contains(point)) { 
-    				 System.out.printf("%s is illegal point" , Player_move);
-    			  }}
-                  print_move(game.next_player,Move.play(point));  
+    			  Move move = new Move(null,false,false);
+    			  move = move.play(point);
+    			 // if(game.illegal_points != null) {while(game.illegal_points.contains(point)) { 
+    			//	 System.out.printf("%s is illegal point" , Player_move);
+    			 // }}
+    		
+                  print_move(game.next_player,move);  
                   game = game.apply_move(move);
+                  
+                  
                   }
     		  else {
     			  System.out.print("Player_WHITE:");
     			  String Player_move = scan.next();
     			  Point point = point_from_coords(Player_move);
-    			  
-    			  Move move = Move.play(point);
-    			  print_move(game.next_player,Move.play(point));  
+    			  Move move = new Move(null,false,false);
+    			  move = move.play(point);
+    			  print_move(game.next_player,move);  
                   game = game.apply_move(move);
         	     
     	 }   

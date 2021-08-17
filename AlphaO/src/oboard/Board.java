@@ -50,20 +50,23 @@ public class Board implements Cloneable {
 			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = this._grid.get(neighbor)[0];		
-			if(neighbor_string.color == null) {
+				
+			if(this._grid.get(neighbor) == null) {
 				liberties_URLL.add(neighbor);
 			}
-			else if(neighbor_string.color == player) {
-			if(adjacent_same_color_URLL.contains(neighbor_string) == false) {
-             adjacent_same_color_URLL.add(neighbor_string);}                
+			else{Ostring neighbor_string = this._grid.get(neighbor)[0];	
+			if(neighbor_string.color == player) {
+			     if(adjacent_same_color_URLL.contains(neighbor_string) == false) {
+                      adjacent_same_color_URLL.add(neighbor_string);}                
+			          } 
+	     	else {   
+	     		      if(adjacent_opposite_color_URLL.contains(neighbor_string) == false) {
+	     		      adjacent_opposite_color_URLL.add(neighbor_string);
+	        	      }
+		         }
 			}
-	     	else {if(adjacent_opposite_color_URLL.contains(neighbor_string) == false) {
-	     		adjacent_opposite_color_URLL.add(neighbor_string);
-	        	}
-		    	
-		    }
 		}
+		
 		HashSet<Point> new_stones_URLL = new HashSet<>();
 		new_stones_URLL.add(point);
         Ostring new_string_URLL = new Ostring(player,new_stones_URLL, liberties_URLL);	
@@ -95,6 +98,7 @@ public class Board implements Cloneable {
 		        }
 		    }
 		}
+		
 		HashSet<Point> new_stones_ULRL = new HashSet<>();
 		new_stones_ULRL.add(point);
         Ostring new_string_ULRL = new Ostring(player,new_stones_ULRL, liberties_ULRL);	
@@ -192,6 +196,7 @@ public class Board implements Cloneable {
 	
 		
 	}
+	
 	public Player get_Player(Point point) {
         Ostring string =_grid.get(point)[1] ;
 		if(string == null) {
