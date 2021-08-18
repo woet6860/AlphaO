@@ -23,12 +23,7 @@ public class Board implements Cloneable {
 	public void place_stone(Player player, Point point) {
 		assert is_on_grid(point);
 		assert get_Player(point) == null;
-		
-		point.neighbor_HORIZON_point();
-		point.neighbor_ULRL_point();
-		point.neighbor_VERTICAL_point();
-		point.neighbor_URLL_point();
-		
+
 		HashSet<Ostring> adjacent_same_color_URLL = new HashSet<>();
 		HashSet<Ostring> adjacent_same_color_ULRL = new HashSet<>();
         HashSet<Ostring> adjacent_same_color_HORIZON = new HashSet<>();
@@ -46,7 +41,7 @@ public class Board implements Cloneable {
     	HashSet<Ostring> adjacent_opposite_color_VERTICAL = new HashSet<>();
 
 		//URLL
-		for(Point neighbor:point.neighbor_URLL) {
+		for(Point neighbor:point.neighbor_URLL_point()) {
 			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
@@ -55,15 +50,13 @@ public class Board implements Cloneable {
 				liberties_URLL.add(neighbor);
 			}
 			else{Ostring neighbor_string = this._grid.get(neighbor)[0];	
-			if(neighbor_string.color == player) {
-			     if(adjacent_same_color_URLL.contains(neighbor_string) == false) {
-                      adjacent_same_color_URLL.add(neighbor_string);}                
-			          } 
-	     	else {   
-	     		      if(adjacent_opposite_color_URLL.contains(neighbor_string) == false) {
-	     		      adjacent_opposite_color_URLL.add(neighbor_string);
-	        	      }
-		         }
+			    if(neighbor_string.color == player) {
+			        if(adjacent_same_color_URLL.contains(neighbor_string) == false) {
+                         adjacent_same_color_URLL.add(neighbor_string);}}                
+	     	    else {   
+	     		    if(adjacent_opposite_color_URLL.contains(neighbor_string) == false) {
+	     		    adjacent_opposite_color_URLL.add(neighbor_string);}    
+		        }
 			}
 		}
 		
@@ -80,21 +73,24 @@ public class Board implements Cloneable {
 		//URLL-END
 		
 		//ULRL
-		for(Point neighbor:point.neighbor_ULRL){
+		for(Point neighbor:point.neighbor_ULRL_point()){
 			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = _grid.get(neighbor)[1];		
-			if(neighbor_string.color == null) {
+			
+			if(this._grid.get(neighbor)== null) {
 				liberties_ULRL.add(neighbor);
 			}
-			else if(neighbor_string.color == player) {
-			if(adjacent_same_color_ULRL.contains(neighbor_string) == false) {
-             adjacent_same_color_ULRL.add(neighbor_string);}                
-			}
-	     	else {if(adjacent_opposite_color_ULRL.contains(neighbor_string) == false) {
-	     		adjacent_opposite_color_ULRL.add(neighbor_string);
-		    	
+			
+			else {Ostring neighbor_string = this._grid.get(neighbor)[1];
+			    if(neighbor_string.color == player) {
+			        if(adjacent_same_color_ULRL.contains(neighbor_string) == false) {
+                        adjacent_same_color_ULRL.add(neighbor_string);}                
+			    }
+	     	    else{
+	     		    if(adjacent_opposite_color_ULRL.contains(neighbor_string) == false) {
+	     		    adjacent_opposite_color_ULRL.add(neighbor_string);
+	     		    }
 		        }
 		    }
 		}
@@ -111,24 +107,27 @@ public class Board implements Cloneable {
 		//ULRL-END
 		
 		//HORIZON
-		for(Point neighbor:point.neighbor_HORIZON) {
+		for(Point neighbor:point.neighbor_HORIZON_point()) {
 			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = _grid.get(neighbor)[2];		
-			if(neighbor_string.color == null) {
+			
+			if(this._grid.get(neighbor) == null) {
 				liberties_HORIZON.add(neighbor);
 			}
-			else if(neighbor_string.color == player) {
-			if(adjacent_same_color_HORIZON.contains(neighbor_string) == false) {
-             adjacent_same_color_HORIZON.add(neighbor_string);}                
-			}
-	     	else {if(adjacent_opposite_color_HORIZON.contains(neighbor_string) == false) {
+			
+			else {Ostring neighbor_string = this._grid.get(neighbor)[2]; 
+			    if(neighbor_string.color == player) {
+			        if(adjacent_same_color_HORIZON.contains(neighbor_string) == false) {
+                         adjacent_same_color_HORIZON.add(neighbor_string);}                
+			      }
+	     	    else {if(adjacent_opposite_color_HORIZON.contains(neighbor_string) == false) {
 	     		adjacent_opposite_color_HORIZON.add(neighbor_string);
-		    	
+	     	        }
 		        }
 	    	}
 		}
+		
 		HashSet<Point> new_stones_HORIZON = new HashSet<>();
 		new_stones_HORIZON.add(point);
         Ostring new_string_HORIZON = new Ostring(player,new_stones_HORIZON, liberties_HORIZON);	
@@ -141,24 +140,26 @@ public class Board implements Cloneable {
 		//HORIZON-END
 		
 		//VERTICAL
-		for(Point neighbor:point.neighbor_VERTICAL) {
+		for(Point neighbor:point.neighbor_VERTICAL_point()) {
 			if(is_on_grid(neighbor) == false) {
 				continue;
 			}
-			Ostring neighbor_string = _grid.get(neighbor)[3];		
-			if(neighbor_string.color == null) {
+					
+			if(this._grid.get(neighbor)== null) {
 				liberties_VERTICAL.add(neighbor);
 			}
-			else if(neighbor_string.color == player) {
-			if(adjacent_same_color_VERTICAL.contains(neighbor_string) == false) {
-             adjacent_same_color_VERTICAL.add(neighbor_string);}                
-			}
-	     	else {if(adjacent_opposite_color_VERTICAL.contains(neighbor_string) == false) {
+			else {Ostring neighbor_string = _grid.get(neighbor)[3];
+			    if(neighbor_string.color == player) {
+			         if(adjacent_same_color_VERTICAL.contains(neighbor_string) == false) {
+                            adjacent_same_color_VERTICAL.add(neighbor_string);}                
+			    }
+	     	    else {if(adjacent_opposite_color_VERTICAL.contains(neighbor_string) == false) {
 	     		adjacent_opposite_color_VERTICAL.add(neighbor_string);
-		    	
+	     	         }
 		        }
 	    	}
 		}
+		
 		HashSet<Point> new_stones_VERTICAL = new HashSet<>();
 		new_stones_URLL.add(point);
         Ostring new_string_VERTICAL = new Ostring(player,new_stones_VERTICAL, liberties_VERTICAL);	

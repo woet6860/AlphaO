@@ -8,9 +8,8 @@ import java.util.HashSet;
 public class GameState{
 	 public Board board;
 	 public Move last_move;
-	 Ostring ostring;
 	 public Player next_player;
-	 public HashSet<GameState> simulate_boards ;
+	 public HashSet<GameState> simulate_boards = new HashSet<>() ;
      public HashSet<Point> illegal_points;
      public GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
     	  this.board = board;
@@ -66,7 +65,7 @@ public class GameState{
     	  
       }
       
-      public void simulate_all(GameState gamestate) {
+      public static void simulate_all(GameState gamestate) {
      	ArrayList<Point> empty_points = new ArrayList<>();
     	for(Point point:gamestate.board._grid.keySet()) {
     		if(gamestate.board._grid.get(point) == null) {

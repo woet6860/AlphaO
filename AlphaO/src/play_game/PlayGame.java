@@ -15,7 +15,7 @@ public class PlayGame {
         	  print_board(game);
 
     	      if(game.next_player == Player.BLACK) {
-    	    	  game.simulate_all(game);
+    	    	  GameState.simulate_all(game);
     	    	  
     			  System.out.print("Player_BLACK:");
     			  String Player_move = scan.next();
@@ -30,9 +30,9 @@ public class PlayGame {
     		
                   print_move(game.next_player,move);  
                   game = game.apply_move(move);
-                  
-                  
                   }
+    	      
+    	      
     		  else {
     			  System.out.print("Player_WHITE:");
     			  String Player_move = scan.next();
