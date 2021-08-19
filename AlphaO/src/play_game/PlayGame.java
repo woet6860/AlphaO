@@ -15,7 +15,7 @@ public class PlayGame {
         	  print_board(game);
 
     	      if(game.next_player == Player.BLACK) {
-    	    	  GameState.simulate_all(game);
+    	    	  game.simulate_all(game);
     	    	  
     			  System.out.print("Player_BLACK:");
     			  String Player_move = scan.next();

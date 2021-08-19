@@ -11,6 +11,7 @@ public class GameState{
 	 public Player next_player;
 	 public HashSet<GameState> simulate_boards = new HashSet<>() ;
      public HashSet<Point> illegal_points;
+     ArrayList<Point> empty_points = new ArrayList<>();
      public GameState(Board board,Player next_player,HashSet<GameState> simulate_boards ,Move move){
     	  this.board = board;
     	  this.next_player = next_player;
@@ -26,12 +27,10 @@ public class GameState{
 
       
       public GameState apply_move(Move move) throws CloneNotSupportedException{
-    	  Board next_board = null;
-    	  try {
-    		  next_board = this.board.clone();
-    	  } catch(CloneNotSupportedException e){
-    		  e.printStackTrace();
-    	  }
+    	  Board next_board = this.board.clone();
+    	  //} catch(CloneNotSupportedException e){
+    	//	  e.printStackTrace();
+    	 // }
     	  if(move.is_play) {
     		 next_board.place_stone(this.next_player, move.point); 
          }
@@ -46,18 +45,19 @@ public class GameState{
 
       
       
-      public static void simulation(GameState gamestate, Point point) {
+      public void simulation(GameState gamestate, Point point) throws CloneNotSupportedException{
     	  
-    	  Board simulation_board = null;
-    	  try {
-    		  simulation_board = gamestate.board.clone();
-    	  } catch(CloneNotSupportedException e){
-    		  e.printStackTrace();
-    	  }
-    	 
+    	  //Board simulation_board = null;
+    	 // try {
+    		Board simulation_board = gamestate.board.clone();
+    	//  } catch(CloneNotSupportedException e){
+    		//  e.printStackTrace();
+    	 // }
+    	  HashSet<GameState> xcxcx = new HashSet<>();
     	  simulation_board.place_stone(Player.BLACK, point);
     	  GameState simulate_GameState = new GameState(simulation_board, Player.BLACK, null, gamestate.last_move);
-    	  gamestate.simulate_boards.add(simulate_GameState);
+    	  xcxcx.add(simulate_GameState);
+    	  gamestate.simulate_boards = xcxcx;
     	  check_3x3_string(gamestate);
     	  check_4x4_string(gamestate);
           check_too_long_string(gamestate);
@@ -65,14 +65,16 @@ public class GameState{
     	  
       }
       
-      public static void simulate_all(GameState gamestate) {
-     	ArrayList<Point> empty_points = new ArrayList<>();
-    	for(Point point:gamestate.board._grid.keySet()) {
+      public void simulate_all(GameState gamestate) throws CloneNotSupportedException {
+     	
+    	for(int i=0; i<gamestate.board.num_cols;i++) {
+    		for(int j=0; j<gamestate.board.num_cols;j++) {
+    			Point point = new Point(i,j); 
     		if(gamestate.board._grid.get(point) == null) {
     			empty_points.add(point);
     		}
     	}
-    	
+    	}
     	for(Point point:empty_points) {
     		simulation(gamestate,point);
     	}	
@@ -82,6 +84,7 @@ public class GameState{
       public static void check_4x4_string(GameState gamestate) {
     	int count4x4 = 0;
     	for(GameState GameState : gamestate.simulate_boards) {
+    		if(GameState.last_move != null){
     		for(Ostring ostring: gamestate.board._grid.get(GameState.last_move.point)) {
     			for(Point point:ostring.liberties) {
     			GameState.board.place_stone(gamestate.next_player, point);
@@ -98,12 +101,13 @@ public class GameState{
     	}
       }
          
-     
+    	} 
 
       
       public static void check_3x3_string(GameState gamestate){
     	  int count = 0;
       	for(GameState GameState : gamestate.simulate_boards) {
+      		if(GameState.last_move != null) {
       		for(Ostring ostring: gamestate.board._grid.get(GameState.last_move.point)) {
       			for(Point point:ostring.liberties) {
       				if(gamestate.illegal_points.contains(point)) {
@@ -134,11 +138,13 @@ public class GameState{
       		}
       	}
       }
+      	}
       }
       
       public static void check_too_long_string(GameState gamestate){
     	  int count = 0;
     	 for(GameState GameState : gamestate.simulate_boards) {
+    		 if(GameState.last_move != null) {
     		 for(Ostring ostring:gamestate.board._grid.get(GameState.last_move.point)) {
     			 if(ostring.len_string()>5) {
     				 count += 1;
@@ -151,7 +157,7 @@ public class GameState{
     	 }
       }
       }
-      
+      }
       
       public boolean is_over() {
     	  if(this.last_move == null) {
